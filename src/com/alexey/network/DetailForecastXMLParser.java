@@ -25,7 +25,6 @@ public class DetailForecastXMLParser {
 	private static final String FORECAST_TAG = "forecast";
 	
 	public static final String KEY_FORECAST_FEEL = "feel";
-	public static final String KEY_FORECAST_GEOM = "geom";
 	public static final String KEY_FORECAST_HIMIDATY = "himidaty";
 	public static final String KEY_FORECAST_PRESSURE = "pressure";
 	public static final String KEY_FORECAST_WIND = "wind";
@@ -83,7 +82,6 @@ public class DetailForecastXMLParser {
 			xml.createElement(KEY_FORECAST_WIND),
 			xml.createElement(KEY_FORECAST_PRESSURE),
 			xml.createElement(KEY_FORECAST_HIMIDATY),
-			xml.createElement(KEY_FORECAST_GEOM)
 		};
 				
 		for(Element attr : attrElements) { 

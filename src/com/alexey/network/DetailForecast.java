@@ -74,7 +74,6 @@ public class DetailForecast {
 				parametersMap.put(DetailForecastXMLParser.KEY_FORECAST_WIND, p.get(1).text());
 				parametersMap.put(DetailForecastXMLParser.KEY_FORECAST_PRESSURE, p.get(2).text());
 				parametersMap.put(DetailForecastXMLParser.KEY_FORECAST_HIMIDATY, p.get(3).text());
-				parametersMap.put(DetailForecastXMLParser.KEY_FORECAST_GEOM, p.get(4).text());
 
 				parametersMap.put(DetailForecastXMLParser.KEY_WEATHER_DESC, desc);
 				parametersMap.put(DetailForecastXMLParser.KEY_WEATHER_ICON_SRC, icon);

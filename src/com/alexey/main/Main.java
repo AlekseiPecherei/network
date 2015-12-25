@@ -40,7 +40,7 @@ public class Main {
 			}
 		});
 
-		forecast.update("/weather/11950/");
+		forecast.update("/weather/11950/", 0);
 
 	}
 
