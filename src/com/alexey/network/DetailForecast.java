@@ -27,16 +27,27 @@ public class DetailForecast {
 
 	public void update(String place) {
 		callback.onForecastLoadStart();
-		org.w3c.dom.Document xml = process(place);
+		org.w3c.dom.Document xml = process(place, 0);
+		callback.onForecastLoadFinish(xml);
+	}
+	
+	/**
+	 * 
+	 * @param place 
+	 * @param day - day is value from 1 to 13.
+	 */
+	public void update(String place, int day) {
+		callback.onForecastLoadStart();
+		org.w3c.dom.Document xml = process(place, day);
 		callback.onForecastLoadFinish(xml);
 	}
 
-	private org.w3c.dom.Document process(String placeId) {
+	private org.w3c.dom.Document process(String placeId, int day) {
 		Document page = null;
 		DetailForecastXMLParser saver = null;
 		try {
 			saver = new DetailForecastXMLParser();
-			String url = URL_ADDRESS_M_GISMETEO_RU + placeId + URL_WEATHER_TYPE_DETAIL;
+			String url = URL_ADDRESS_M_GISMETEO_RU + placeId + URL_WEATHER_TYPE_DETAIL + "/" + day;
 			page = Jsoup.connect(url).get();
 
 			String elem = page.getElementsByClass(FILTER_HTML_PAGE_BY_CLASS_NAME_TIME_SELECT)
