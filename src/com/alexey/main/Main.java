@@ -35,7 +35,6 @@ public class Main {
 
 			@Override
 			public void onForecastLoadFinish(Document xml) {
-				NodeList list = xml.getElementsByTagNameNS("*", "");
 				DetailForecastXMLParser.show(xml);
 			}
 		});
