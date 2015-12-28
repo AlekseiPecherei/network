@@ -1,4 +1,4 @@
-package com.alexey.network;
+package com.alexey.network.interfaces;
 
 import org.w3c.dom.Document;
 

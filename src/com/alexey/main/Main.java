@@ -3,9 +3,12 @@ package com.alexey.main;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
+import com.alexey.network.BaseForecast;
+import com.alexey.network.CurrentForecast;
 import com.alexey.network.DetailForecast;
-import com.alexey.network.DetailForecastXMLParser;
-import com.alexey.network.IForecast;
+import com.alexey.network.interfaces.IForecast;
+import com.alexey.network.parser.DetailForecastParser;
+import com.alexey.network.parser.Parcer;
 
 public class Main {
 
@@ -26,7 +29,7 @@ public class Main {
 		//
 		// manager.search("ƒзержинск");
 
-		DetailForecast forecast = new DetailForecast(new IForecast() {
+		BaseForecast forecast = new CurrentForecast(new IForecast() {
 
 			@Override
 			public void onForecastLoadStart() {
@@ -35,11 +38,11 @@ public class Main {
 
 			@Override
 			public void onForecastLoadFinish(Document xml) {
-				DetailForecastXMLParser.show(xml);
+				Parcer.show(xml);
 			}
 		});
-
-		forecast.update("/weather/11950/", 0);
+		
+		forecast.update("/weather/11950/");
 
 	}
 

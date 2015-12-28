@@ -1,55 +1,27 @@
-package com.alexey.network;
+package com.alexey.network.parser;
 
-import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-public class DetailForecastXMLParser {
+public class DetailForecastParser extends Parcer {
 	private static final String ROOT_ELEMENT = "detailDay";
 	private static final String DETAIL_TIME_TAG = "detailTime";
 	private static final String WEATHER_TAG = "weather";
 	private static final String FORECAST_TAG = "forecast";
-	
-	public static final String KEY_FORECAST_FEEL = "feel";
-	public static final String KEY_FORECAST_HIMIDATY = "himidaty";
-	public static final String KEY_FORECAST_PRESSURE = "pressure";
-	public static final String KEY_FORECAST_WIND = "wind";
-	
-	public static final String KEY_WEATHER_DESC = "desc";
-	public static final String KEY_WEATHER_TEMP = "temp";
-	public static final String KEY_WEATHER_ICON_SRC = "icon_src";
-	
-	public static final String KEY_DETAIL_TIME_ATTR = "value";
-	public static final String KEY_DETAIL_DAY_ATTR = "day";
-	
-	private DocumentBuilderFactory factory;
-	private DocumentBuilder builder;
-	private Document xml;
 	
 	private Element mRootElement;		//<DetailDay> root block
 	private List<Element> mDetailTimes;	//<DetailTime> blocks
 	private List<Element> mForecasts;	//<Forecast> blocks
 	private List<Element> mWeathers;	//<Weather> blocks
 	
-	public DetailForecastXMLParser() throws ParserConfigurationException {
-		factory = DocumentBuilderFactory.newInstance();
-		builder = factory.newDocumentBuilder();
-		xml = builder.newDocument();		
-
+	public DetailForecastParser() throws ParserConfigurationException {
 		mDetailTimes = new ArrayList<>();
 		mForecasts = new ArrayList<>();
 		mWeathers = new ArrayList<>();
@@ -111,6 +83,10 @@ public class DetailForecastXMLParser {
 		mWeathers.add(currentWeather);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.alexey.network.IParcer#prepareDocument()
+	 */
+	@Override
 	public Document prepareDocument() {
 		for(Element e : mDetailTimes) {
 			int index = mDetailTimes.indexOf(e);
@@ -122,26 +98,5 @@ public class DetailForecastXMLParser {
 		return xml;
 	}
 	
-	/**
-	 * 
-	 * @param doc - org.w3c.dom.Document object.
-	 * This method print <b>doc</b> param to System.out stream
-	 */
-	public static void show(Document doc) {
-	    try {
-	        StringWriter sw = new StringWriter();
-	        TransformerFactory tf = TransformerFactory.newInstance();
-	        Transformer transformer = tf.newTransformer();
-	        transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
-	        transformer.setOutputProperty(OutputKeys.METHOD, "xml");
-	        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-	        transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
 
-	        transformer.transform(new DOMSource(doc), new StreamResult(sw));
-	        System.out.println(sw.toString());
-	        sw.flush();
-	    } catch (Exception ex) {
-	        throw new RuntimeException("Error converting to String", ex);
-	    }
-	}
 }

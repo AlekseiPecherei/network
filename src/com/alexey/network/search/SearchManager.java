@@ -11,6 +11,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import com.alexey.network.interfaces.ISearch;
+
 public class SearchManager {
 	private static final String FILTER_HTML_PAGE_BY_A_HREF_TAG 					= "a[href*=/weather/]";
 	private static final String FILTER_HTML_PAGE_BY_CLASS_NAME_CATALOG_TXT 		= "catalog__txt";
