@@ -1,14 +1,14 @@
 package com.alexey.main;
 
 import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
 
 import com.alexey.network.BaseForecast;
-import com.alexey.network.CurrentForecast;
 import com.alexey.network.DetailForecast;
+import com.alexey.network.constants.Keys;
+import com.alexey.network.decoder.DetailForecastDecoder;
+import com.alexey.network.decoder.DetailForecastDecoder.DetailTimes;
+import com.alexey.network.encoder.Encoder;
 import com.alexey.network.interfaces.IForecast;
-import com.alexey.network.parser.DetailForecastParser;
-import com.alexey.network.parser.Parcer;
 
 public class Main {
 
@@ -29,20 +29,23 @@ public class Main {
 		//
 		// manager.search("ƒзержинск");
 
-		BaseForecast forecast = new CurrentForecast(new IForecast() {
+		BaseForecast forecast = new DetailForecast(new IForecast() {
 
 			@Override
 			public void onForecastLoadStart() {
-				System.out.println("update");
+				System.out.println("start...");
 			}
 
 			@Override
 			public void onForecastLoadFinish(Document xml) {
-				Parcer.show(xml);
+				Encoder.show(xml);
+				System.out.println(DetailForecastDecoder.getDetailDay(xml));
+				DetailForecastDecoder.DetailTime time = DetailForecastDecoder.getDetailTime(xml, DetailTimes.DAY);
+				System.out.println(time.getValue(Keys.KEY_FORECAST_WIND));
 			}
-		});
+		});		
 		
-		forecast.update("/weather/11950/");
+		forecast.update("/weather/11950/", 1);
 
 	}
 

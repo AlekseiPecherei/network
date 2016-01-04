@@ -6,9 +6,9 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import com.alexey.network.constants.Keys;
+import com.alexey.network.encoder.DetailForecastEncoder;
 import com.alexey.network.interfaces.IForecast;
-import com.alexey.network.parser.DetailForecastParser;
-import com.alexey.network.parser.Parcer;
 
 public class DetailForecast extends BaseForecast {
 	private static final String FILTER_HTML_PAGE_BY_SELECTION = "option[selected]";
@@ -23,7 +23,7 @@ public class DetailForecast extends BaseForecast {
 	@Override
 	public org.w3c.dom.Document process(String placeId, int day) {
 		try {
-			DetailForecastParser saver = new DetailForecastParser();
+			DetailForecastEncoder saver = new DetailForecastEncoder();
 			Document page = getForecastHtmlPage(placeId, day);
 
 			String elem = page.getElementsByClass(FILTER_HTML_PAGE_BY_CLASS_NAME_TIME_SELECT)
@@ -42,14 +42,14 @@ public class DetailForecast extends BaseForecast {
 				Elements p = e.getElementsByTag(pTag);
 				HashMap<String, String> parametersMap = new HashMap<>();
 
-				parametersMap.put(Parcer.KEY_FORECAST_FEEL, p.get(0).text());
-				parametersMap.put(Parcer.KEY_FORECAST_WIND, p.get(1).text());
-				parametersMap.put(Parcer.KEY_FORECAST_PRESSURE, p.get(2).text());
-				parametersMap.put(Parcer.KEY_FORECAST_HIMIDATY, p.get(3).text());
+				parametersMap.put(Keys.KEY_FORECAST_FEEL, p.get(0).text());
+				parametersMap.put(Keys.KEY_FORECAST_WIND, p.get(1).text());
+				parametersMap.put(Keys.KEY_FORECAST_PRESSURE, p.get(2).text());
+				parametersMap.put(Keys.KEY_FORECAST_HIMIDATY, p.get(3).text());
 
-				parametersMap.put(Parcer.KEY_WEATHER_DESC, desc);
-				parametersMap.put(Parcer.KEY_WEATHER_ICON_SRC, icon);
-				parametersMap.put(Parcer.KEY_WEATHER_TEMP, temp);
+				parametersMap.put(Keys.KEY_WEATHER_DESC, desc);
+				parametersMap.put(Keys.KEY_WEATHER_ICON_SRC, icon);
+				parametersMap.put(Keys.KEY_WEATHER_TEMP, temp);
 
 				saver.addWeatherBlock(parametersMap);
 				saver.addForecastBlock(parametersMap);

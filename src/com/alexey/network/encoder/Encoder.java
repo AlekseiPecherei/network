@@ -1,8 +1,7 @@
-package com.alexey.network.parser;
+package com.alexey.network.encoder;
 
 import java.io.StringWriter;
 
-import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
@@ -13,29 +12,12 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
 
-public abstract class Parcer {
+public abstract class Encoder {
 
-	public final static String KEY_FORECAST_FEEL = "feel";
-	public final static String KEY_FORECAST_HIMIDATY = "himidaty";
-	public final static String KEY_FORECAST_PRESSURE = "pressure";
-	public final static String KEY_FORECAST_WIND = "wind";
-	public final static String KEY_FORECAST_WATER_TEMP = "water";
-	public final static String KEY_FORECAST_HEOM = "heom";
-	public final static String KEY_FORECAST_SUNRISE = "sunrise";
-	public final static String KEY_FORECAST_SUNSET = "sunset";
-	public final static String KEY_FORECAST_DAY_DURATION = "duration";
-	public final static String KEY_FORECAST_MOON = "moon";
-	
-	public final static String KEY_WEATHER_DESC = "desc";
-	public final static String KEY_WEATHER_TEMP = "temp";
-	public final static String KEY_WEATHER_ICON_SRC = "icon_src";
-	
-	public final static String KEY_DETAIL_TIME_ATTR = "value";
-	public final static String KEY_DETAIL_DAY_ATTR = "day";
 	
 	protected Document xml;
 	
-	public Parcer() throws ParserConfigurationException {
+	public Encoder() throws ParserConfigurationException {
 		xml = createDocument();
 	}
 	
