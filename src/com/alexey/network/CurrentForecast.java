@@ -65,7 +65,7 @@ public class CurrentForecast extends BaseForecast {
 
 	@Override
 	protected String getURL(String placeId, int day) {
-		return URL_ADDRESS_M_GISMETEO_RU + placeId + URL_WEATHER_TYPE_DETAIL;
+		return LoadUtils.URL_ADDRESS + placeId + URL_WEATHER_TYPE_DETAIL;
 	}
 
 }

@@ -2,7 +2,6 @@ package com.alexey.network;
 
 import java.io.IOException;
 
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
@@ -10,7 +9,6 @@ import com.alexey.network.interfaces.IForecast;
 
 public abstract class BaseForecast {
 	protected static final String FILTER_HTML_PAGE_BY_CLASS_NAME_DETAIL_TIME = "detail__time";
-	protected static final String URL_ADDRESS_M_GISMETEO_RU = "http://m.gismeteo.ru";
 
 	protected IForecast callback;
 
@@ -36,7 +34,7 @@ public abstract class BaseForecast {
 
 	protected Document getForecastHtmlPage(String placeId, int day) throws IOException {
 		String url = getURL(placeId, day);
-		return Jsoup.connect(url).get();
+		return LoadUtils.loadPage(url);
 	}
 
 	protected abstract org.w3c.dom.Document process(String placeId, int day);
