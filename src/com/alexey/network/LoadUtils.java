@@ -7,6 +7,8 @@ import java.nio.charset.StandardCharsets;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 public final class LoadUtils {
 	private static final String ENCODE_UTF_8 = StandardCharsets.UTF_8.name();
@@ -14,11 +16,15 @@ public final class LoadUtils {
 	public final static String URL_ADDRESS = "http://m.gismeteo.ru";
 	public final static String SEARCH_URL_ADDRESS = "http://m.gismeteo.ru/citysearch/by_name/?gis_search=";
 	
-	public static Document loadPage(String url) throws IOException {
+	public static Document loadHtmlPage(String url) throws IOException {
 		return Jsoup.connect(url).get();
 	}
 	
-	public static String getSearchAddress(String what) throws UnsupportedEncodingException {
+	public static String prepareSearchAddress(String what) throws UnsupportedEncodingException {
 		return SEARCH_URL_ADDRESS + URLEncoder.encode(what, ENCODE_UTF_8);
+	}
+	
+	public static Elements getByTagName(Element e, String name) {
+		return e.getElementsByClass(name);
 	}
 }

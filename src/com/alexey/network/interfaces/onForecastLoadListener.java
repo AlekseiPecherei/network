@@ -2,7 +2,7 @@ package com.alexey.network.interfaces;
 
 import org.w3c.dom.Document;
 
-public interface IForecast {
+public interface onForecastLoadListener {
 	void onForecastLoadStart();
 	void onForecastLoadFinish(Document xml);
 }

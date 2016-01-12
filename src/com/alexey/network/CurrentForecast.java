@@ -9,12 +9,12 @@ import org.jsoup.select.Elements;
 import com.alexey.network.constants.Keys;
 import com.alexey.network.encoder.CurrentEncoder;
 import com.alexey.network.encoder.Encoder;
-import com.alexey.network.interfaces.IForecast;
+import com.alexey.network.interfaces.onForecastLoadListener;
 
 public class CurrentForecast extends BaseForecast {
 	private static final String URL_WEATHER_TYPE_DETAIL = "current";
 	
-	public CurrentForecast(IForecast callback) {
+	public CurrentForecast(onForecastLoadListener callback) {
 		super(callback);
 	}
 

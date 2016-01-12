@@ -8,7 +8,7 @@ import org.jsoup.select.Elements;
 
 import com.alexey.network.constants.Keys;
 import com.alexey.network.encoder.DetailForecastEncoder;
-import com.alexey.network.interfaces.IForecast;
+import com.alexey.network.interfaces.onForecastLoadListener;
 
 public class DetailForecast extends BaseForecast {
 	private static final String FILTER_HTML_PAGE_BY_SELECTION = "option[selected]";
@@ -16,7 +16,7 @@ public class DetailForecast extends BaseForecast {
 
 	private static final String URL_WEATHER_TYPE_DETAIL = "detailday";
 
-	public DetailForecast(IForecast forecast) {
+	public DetailForecast(onForecastLoadListener forecast) {
 		super(forecast);
 	}
 

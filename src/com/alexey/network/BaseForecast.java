@@ -5,14 +5,14 @@ import java.io.IOException;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
-import com.alexey.network.interfaces.IForecast;
+import com.alexey.network.interfaces.onForecastLoadListener;
 
 public abstract class BaseForecast {
 	protected static final String FILTER_HTML_PAGE_BY_CLASS_NAME_DETAIL_TIME = "detail__time";
 
-	protected IForecast callback;
+	protected onForecastLoadListener callback;
 
-	public BaseForecast(IForecast callback) {
+	public BaseForecast(onForecastLoadListener callback) {
 		this.callback = callback;
 	}
 
@@ -34,7 +34,7 @@ public abstract class BaseForecast {
 
 	protected Document getForecastHtmlPage(String placeId, int day) throws IOException {
 		String url = getURL(placeId, day);
-		return LoadUtils.loadPage(url);
+		return LoadUtils.loadHtmlPage(url);
 	}
 
 	protected abstract org.w3c.dom.Document process(String placeId, int day);

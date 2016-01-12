@@ -9,30 +9,32 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import com.alexey.network.LoadUtils;
-import com.alexey.network.interfaces.ISearch;
+import com.alexey.network.interfaces.onSearchListener;
 
 public class SearchManager {
-	private ISearch mCallback;
+	private onSearchListener mListener;
 
-	public SearchManager(ISearch search) {
-		mCallback = search;
+	public void setOnSearchListener(onSearchListener listener) {
+		mListener = listener;
 	}
 
 	public void search(String what) {
-		mCallback.onSearchStart();
-		List<SearchResult> list = getSearchResults(what);
-		mCallback.onSearchFinish(list);
+		if (mListener != null) {
+			mListener.onSearchStart();
+			List<SearchResult> list = getSearchResults(what);
+			mListener.onSearchFinish(list);
+		}
 	}
 
 	private List<SearchResult> getSearchResults(String what) {
 		List<SearchResult> list = new ArrayList<>();
 		try {
-			String url = LoadUtils.getSearchAddress(what);
-			Document searchPage = LoadUtils.loadPage(url);
+			String url = LoadUtils.prepareSearchAddress(what);
+			Document searchPage = LoadUtils.loadHtmlPage(url);
 
-			Elements onlyLiElements = filterPage(searchPage);
+			Elements elements = getLiTagElements(searchPage);
 
-			for (Element e : onlyLiElements) {
+			for (Element e : elements) {
 				list.add(prepareResult(e));
 			}
 		} catch (IOException e) {
@@ -41,7 +43,23 @@ public class SearchManager {
 		return list;
 	}
 
-	private Elements filterPage(Document searchPage) {
+	private Elements getLiTagElements(Document searchPage) {
+//		<html>
+//		<body>
+//		<ul>
+//		  <li></li>
+//		  <li></li>
+//		  <li></li>
+//		</ul>
+//		</body>
+//		</html>
+//		
+//		convert to
+//		
+//		<li></li>
+//		<li></li>
+//		<li></li>
+		
 		String filter1 = "a.catalog__link";
 		String filter2 = "a[href*=/weather/]";
 
@@ -52,9 +70,12 @@ public class SearchManager {
 		String className = "catalog__txt";
 		String hrefTag = "href";
 		String aTag = "a";
+		
 		String link = e.attr(hrefTag);
-		String discription = e.getElementsByClass(className).text();
-		e.getElementsByClass(className).remove();
+		
+		Elements temp = LoadUtils.getByTagName(e, className);
+		String discription = temp.text();
+		temp.remove();
 		String name = e.select(aTag).text();
 
 		SearchResult result = new SearchResult();
