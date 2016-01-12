@@ -12,9 +12,7 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
 
-public abstract class Encoder {
-
-	
+public abstract class Encoder {	
 	protected Document xml;
 	
 	public Encoder() throws ParserConfigurationException {

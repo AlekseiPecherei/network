@@ -12,9 +12,7 @@ import com.alexey.network.constants.Keys;
 import com.alexey.network.constants.Tags;
 
 public class CurrentEncoder extends Encoder {
-	public CurrentEncoder() throws ParserConfigurationException {
-		super();
-	}
+	public CurrentEncoder() throws ParserConfigurationException {}
 
 	private Element mRootElement, mWeather, mForecast, mForecastMore;
 

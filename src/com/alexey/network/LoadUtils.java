@@ -24,7 +24,20 @@ public final class LoadUtils {
 		return SEARCH_URL_ADDRESS + URLEncoder.encode(what, ENCODE_UTF_8);
 	}
 	
-	public static Elements getByTagName(Element e, String name) {
+	public static Elements getByClass(Document document, String name) {
+		return document.getElementsByClass(name);
+	}
+	
+	public static Elements getByClass(Element e, String name) {
 		return e.getElementsByClass(name);
+	}
+	
+	public static String getTextByTagName(Element e, String name) {
+		return getByClass(e, name).text();
+	}
+	
+	public static Elements getPTagElements(Element e) {
+		String tag = "p";
+		return e.getElementsByTag(tag);
 	}
 }

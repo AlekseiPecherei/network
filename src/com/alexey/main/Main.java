@@ -6,13 +6,14 @@ import java.util.List;
 import org.w3c.dom.Document;
 
 import com.alexey.network.BaseForecast;
+import com.alexey.network.CurrentForecast;
 import com.alexey.network.DetailForecast;
 import com.alexey.network.constants.Keys;
 import com.alexey.network.decoder.DetailForecastDecoder;
 import com.alexey.network.decoder.DetailForecastDecoder.DetailTimes;
 import com.alexey.network.encoder.Encoder;
-import com.alexey.network.interfaces.IForecast;
-import com.alexey.network.interfaces.ISearch;
+import com.alexey.network.interfaces.onForecastLoadListener;
+import com.alexey.network.interfaces.onSearchListener;
 import com.alexey.network.search.SearchManager;
 import com.alexey.network.search.SearchResult;
 
@@ -20,22 +21,27 @@ public class Main {
 
 	public static void main(String[] args) {
 		List<SearchResult> list = new ArrayList<>();
-		SearchManager manager = new SearchManager(new ISearch() {
+//		SearchManager manager = new SearchManager();
+//		manager.setOnSearchListener(new onSearchListener() {
+//			
+//			@Override
+//			public void onSearchStart() {
+//				System.out.println("start...");
+//			}
+//			
+//			@Override
+//			public void onSearchFinish(List<SearchResult> result) {
+//				for (SearchResult sr : result) {
+//					System.out.println(sr);
+//				}
+//			}
+//		});
+//
+//		manager.search("ƒзержинск");
 
-			@Override
-			public void onSearchStart() {
-				System.out.println("поиск началс€");
-			}
-
-			@Override
-			public void onSearchFinish(List<SearchResult> result) {
-				System.out.println("найдено: " + result.size());
-			}
-		});
-
-		manager.search("ƒзержинск");
-
-		BaseForecast forecast = new DetailForecast(new IForecast() {
+		BaseForecast forecast = new DetailForecast();
+//		BaseForecast forecast = new CurrentForecast();
+		forecast.setOnForecastLoadListener(new onForecastLoadListener() {
 
 			@Override
 			public void onForecastLoadStart() {

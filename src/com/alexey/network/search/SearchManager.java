@@ -73,7 +73,7 @@ public class SearchManager {
 		
 		String link = e.attr(hrefTag);
 		
-		Elements temp = LoadUtils.getByTagName(e, className);
+		Elements temp = LoadUtils.getByClass(e, className);
 		String discription = temp.text();
 		temp.remove();
 		String name = e.select(aTag).text();

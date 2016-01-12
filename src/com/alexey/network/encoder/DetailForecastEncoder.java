@@ -95,6 +95,4 @@ public class DetailForecastEncoder extends Encoder {
 		}
 		return xml;
 	}
-	
-
 }

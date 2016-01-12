@@ -8,55 +8,30 @@ import org.jsoup.select.Elements;
 
 import com.alexey.network.constants.Keys;
 import com.alexey.network.encoder.CurrentEncoder;
-import com.alexey.network.encoder.Encoder;
-import com.alexey.network.interfaces.onForecastLoadListener;
 
 public class CurrentForecast extends BaseForecast {
-	private static final String URL_WEATHER_TYPE_DETAIL = "current";
-	
-	public CurrentForecast(onForecastLoadListener callback) {
-		super(callback);
-	}
-
 	@Override
 	public org.w3c.dom.Document process(String placeId, int day) {
 		try {
-			CurrentEncoder parser = new CurrentEncoder();
+			CurrentEncoder encoder = new CurrentEncoder();
 			
 			Document page = getForecastHtmlPage(placeId, day);			
-			Element root = page.getElementsByClass(FILTER_HTML_PAGE_BY_CLASS_NAME_DETAIL_TIME).get(0);
+			Element root = LoadUtils.getByClass(page, "detail__time").get(0);
 
-			String title = BaseForecast.filterTitle(root);		
-			parser.createRootDayBlock(title);
-			
-			String icon = BaseForecast.filterWeatherIcon(root);
-			String temp = BaseForecast.filterWeatherTemp(root);
-			String desc = BaseForecast.filterWeatherDesc(root);
-			
-			String pTag = "p";
-			Elements p = root.getElementsByTag(pTag);
-			HashMap<String, String> parametersMap = new HashMap<>();
-			
-			parametersMap.put(Keys.KEY_FORECAST_FEEL, p.get(0).text());
-			parametersMap.put(Keys.KEY_FORECAST_WIND, p.get(1).text());
-			parametersMap.put(Keys.KEY_FORECAST_PRESSURE, p.get(2).text());
-			parametersMap.put(Keys.KEY_FORECAST_HIMIDATY, p.get(3).text());
-			parametersMap.put(Keys.KEY_FORECAST_WATER_TEMP, p.get(4).text());
-			parametersMap.put(Keys.KEY_FORECAST_HEOM, p.get(5).text());
-			parametersMap.put(Keys.KEY_FORECAST_SUNRISE, p.get(6).text());
-			parametersMap.put(Keys.KEY_FORECAST_SUNSET, p.get(7).text());
-			parametersMap.put(Keys.KEY_FORECAST_DAY_DURATION, p.get(8).text());
-			parametersMap.put(Keys.KEY_FORECAST_MOON, p.get(9).text());
-			
-			parametersMap.put(Keys.KEY_WEATHER_DESC, desc);
-			parametersMap.put(Keys.KEY_WEATHER_ICON_SRC, icon);
-			parametersMap.put(Keys.KEY_WEATHER_TEMP, temp);
-			
-			parser.addWeatherBlock(parametersMap);
-			parser.addForecastBlock(parametersMap);
-			parser.addForecastMoreBlock(parametersMap);
+			String title = filterTitle(root);		
+			encoder.createRootDayBlock(title);
 
-			return parser.prepareDocument();
+			Elements p = LoadUtils.getPTagElements(root);
+			HashMap<String, String> parameters = new HashMap<>();
+			
+			fillMap(p, parameters);			
+			fillMap(root, parameters);
+			
+			encoder.addWeatherBlock(parameters);
+			encoder.addForecastBlock(parameters);
+			encoder.addForecastMoreBlock(parameters);
+
+			return encoder.prepareDocument();
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -64,8 +39,22 @@ public class CurrentForecast extends BaseForecast {
 	}
 
 	@Override
-	protected String getURL(String placeId, int day) {
-		return LoadUtils.URL_ADDRESS + placeId + URL_WEATHER_TYPE_DETAIL;
+	protected void fillMap(Elements es, HashMap<String, String> map) {
+		map.put(Keys.KEY_FORECAST_FEEL, es.get(0).text());
+		map.put(Keys.KEY_FORECAST_WIND, es.get(1).text());
+		map.put(Keys.KEY_FORECAST_PRESSURE, es.get(2).text());
+		map.put(Keys.KEY_FORECAST_HIMIDATY, es.get(3).text());
+		map.put(Keys.KEY_FORECAST_WATER_TEMP, es.get(4).text());
+		map.put(Keys.KEY_FORECAST_HEOM, es.get(5).text());
+		map.put(Keys.KEY_FORECAST_SUNRISE, es.get(6).text());
+		map.put(Keys.KEY_FORECAST_SUNSET, es.get(7).text());
+		map.put(Keys.KEY_FORECAST_DAY_DURATION, es.get(8).text());
+		map.put(Keys.KEY_FORECAST_MOON, es.get(9).text());
+	}
+
+	@Override
+	protected String prepareURL(String placeId, int day) {
+		return LoadUtils.URL_ADDRESS + placeId + "current";
 	}
 
 }
