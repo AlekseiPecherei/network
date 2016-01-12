@@ -7,8 +7,6 @@ import java.nio.charset.StandardCharsets;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
 public final class LoadUtils {
 	private static final String ENCODE_UTF_8 = StandardCharsets.UTF_8.name();
@@ -22,22 +20,5 @@ public final class LoadUtils {
 	
 	public static String prepareSearchAddress(String what) throws UnsupportedEncodingException {
 		return SEARCH_URL_ADDRESS + URLEncoder.encode(what, ENCODE_UTF_8);
-	}
-	
-	public static Elements getByClass(Document document, String name) {
-		return document.getElementsByClass(name);
-	}
-	
-	public static Elements getByClass(Element e, String name) {
-		return e.getElementsByClass(name);
-	}
-	
-	public static String getTextByTagName(Element e, String name) {
-		return getByClass(e, name).text();
-	}
-	
-	public static Elements getPTagElements(Element e) {
-		String tag = "p";
-		return e.getElementsByTag(tag);
 	}
 }

@@ -8,6 +8,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import com.alexey.network.BaseForecast;
 import com.alexey.network.LoadUtils;
 import com.alexey.network.interfaces.onSearchListener;
 
@@ -73,7 +74,7 @@ public class SearchManager {
 		
 		String link = e.attr(hrefTag);
 		
-		Elements temp = LoadUtils.getByClass(e, className);
+		Elements temp = BaseForecast.Filter.getByClass(e, className);
 		String discription = temp.text();
 		temp.remove();
 		String name = e.select(aTag).text();

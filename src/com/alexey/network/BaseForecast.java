@@ -53,21 +53,40 @@ public abstract class BaseForecast {
 		String imgTag = "img";
 		String srcTag = "src";
 		String name = "weather__icon";
-		return LoadUtils.getByClass(element, name).select(imgTag).attr(srcTag);
+		return Filter.getByClass(element, name).select(imgTag).attr(srcTag);
 	}
 
 	private String filterWeatherDesc(Element element) {
 		String name = "weather__desc";
-		return LoadUtils.getTextByTagName(element, name);
+		return Filter.getTextByTagName(element, name);
 	}
 
 	private String filterWeatherTemp(Element element) {
 		String name = "weather__temp";
-		return LoadUtils.getTextByTagName(element, name);
+		return Filter.getTextByTagName(element, name);
 	}
 
 	protected String filterTitle(Element element) {
 		String name = "title";
-		return LoadUtils.getTextByTagName(element, name);
+		return Filter.getTextByTagName(element, name);
+	}
+	
+	public static class Filter {
+		public static Elements getByClass(Document document, String name) {
+			return document.getElementsByClass(name);
+		}
+		
+		public static Elements getByClass(Element e, String name) {
+			return e.getElementsByClass(name);
+		}
+		
+		public static String getTextByTagName(Element e, String name) {
+			return getByClass(e, name).text();
+		}
+		
+		public static Elements getPTagElements(Element e) {
+			String tag = "p";
+			return e.getElementsByTag(tag);
+		}
 	}
 }

@@ -16,12 +16,12 @@ public class CurrentForecast extends BaseForecast {
 			CurrentEncoder encoder = new CurrentEncoder();
 			
 			Document page = getForecastHtmlPage(placeId, day);			
-			Element root = LoadUtils.getByClass(page, "detail__time").get(0);
+			Element root = Filter.getByClass(page, "detail__time").get(0);
 
 			String title = filterTitle(root);		
 			encoder.createRootDayBlock(title);
 
-			Elements p = LoadUtils.getPTagElements(root);
+			Elements p = Filter.getPTagElements(root);
 			HashMap<String, String> parameters = new HashMap<>();
 			
 			fillMap(p, parameters);			

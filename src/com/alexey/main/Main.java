@@ -38,7 +38,7 @@ public class Main {
 //		});
 //
 //		manager.search("ƒзержинск");
-
+		
 		BaseForecast forecast = new DetailForecast();
 //		BaseForecast forecast = new CurrentForecast();
 		forecast.setOnForecastLoadListener(new onForecastLoadListener() {
@@ -52,7 +52,7 @@ public class Main {
 			public void onForecastLoadFinish(Document xml) {
 				Encoder.show(xml);
 				System.out.println(DetailForecastDecoder.getDetailDay(xml));
-				DetailForecastDecoder.DetailTime time = DetailForecastDecoder.getDetailTime(xml, DetailTimes.DAY);
+				DetailForecastDecoder.DetailTime time = DetailForecastDecoder.getDetailTime(xml, DetailTimes.MORNING);
 				System.out.println(time.getValue(Keys.KEY_FORECAST_WIND));
 			}
 		});

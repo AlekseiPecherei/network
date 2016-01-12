@@ -16,15 +16,15 @@ public class DetailForecast extends BaseForecast {
 			DetailForecastEncoder encoder = new DetailForecastEncoder();
 			Document page = getForecastHtmlPage(placeId, day);
 
-			String elem = LoadUtils.getByClass(page, "time__select").select("option[selected]").text();
+			String elem = Filter.getByClass(page, "time__select").select("option[selected]").text();
 			encoder.createRootDayBlock(elem);
 
-			Elements detail = LoadUtils.getByClass(page, "detail__time");
+			Elements detail = Filter.getByClass(page, "detail__time");
 
 			for (Element e : detail) {
 				String value = filterTitle(e);
 
-				Elements p = LoadUtils.getPTagElements(e);
+				Elements p = Filter.getPTagElements(e);
 				HashMap<String, String> parameters = new HashMap<>();
 
 				fillMap(p, parameters);
